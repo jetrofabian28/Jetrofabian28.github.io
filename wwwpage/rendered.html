@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard C++ Web Template</title>
+    <style>
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: rgba(30, 41, 59, 0.85);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-cyan: #06b6d4;
+            --accent-emerald: #10b981;
+            --accent-purple: #8b5cf6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(6, 182, 212, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 85% 70%, rgba(139, 92, 246, 0.12) 0%, transparent 40%);
+        }
+
+        /* Navbar */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 700;
+            font-size: 1.25rem;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-badge {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            color: #fff;
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 800;
+        }
+
+        .nav-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--accent-emerald);
+            background: rgba(16, 185, 129, 0.12);
+            padding: 0.35rem 0.85rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(16, 185, 129, 0.25);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-emerald);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent-emerald);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
+        }
+
+        /* Main Container */
+        main {
+            flex: 1;
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 2.5rem 1rem 1.5rem;
+        }
+
+        .hero h1 {
+            font-size: 2.75rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #ffffff, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: var(--text-secondary);
+            font-size: 1.15rem;
+            max-width: 650px;
+            margin: 0 auto 1.5rem;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(6, 182, 212, 0.4);
+        }
+
+        .card-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .card-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            display: flex;
+            align-items: baseline;
+            gap: 0.4rem;
+        }
+
+        .card-subtext {
+            font-size: 0.8rem;
+            color: var(--accent-cyan);
+            margin-top: 0.4rem;
+        }
+
+        /* Content Section */
+        .content-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 2rem;
+        }
+
+        .content-box h2 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+        }
+
+        .feature-item {
+            display: flex;
+            gap: 1rem;
+            background: rgba(15, 23, 42, 0.4);
+            padding: 1.2rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .feature-icon {
+            font-size: 1.5rem;
+        }
+
+        .feature-item h3 {
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .feature-item p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        /* Interactive Action Box */
+        .action-box {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(139, 92, 246, 0.1));
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--accent-cyan), #0284c7);
+            color: white;
+            border: none;
+            padding: 0.65rem 1.25rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 1.5rem 2rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            background: rgba(15, 23, 42, 0.6);
+        }
+
+        footer span {
+            color: var(--accent-cyan);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Navbar -->
+    <header>
+        <div class="logo">
+            <span class="logo-badge">C++</span>
+            <span>Web Platform</span>
+        </div>
+        <div class="nav-status">
+            <div class="status-dot"></div>
+            <span id="server-status">Online (C++ Engine)</span>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Web Template Berbasis C++</h1>
+            <p>Template responsif dan modern berkecepatan tinggi yang disajikan langsung menggunakan backend native C++.</p>
+        </section>
+
+        <!-- Stats / Metrics -->
+        <section class="stats-grid">
+            <div class="card">
+                <div class="card-label">Backend Engine</div>
+                <div class="card-value">C++ Standard</div>
+                <div class="card-subtext">Socket HTTP / Winsock</div>
+            </div>
+            <div class="card">
+                <div class="card-label">Operating System</div>
+                <div class="card-value" id="val-os">Windows (UCRT64/x64)</div>
+                <div class="card-subtext">Host Platform</div>
+            </div>
+            <div class="card">
+                <div class="card-label">Server Uptime</div>
+                <div class="card-value" id="val-uptime">0s</div>
+                <div class="card-subtext">Live Counter</div>
+            </div>
+            <div class="card">
+                <div class="card-label">HTTP Response</div>
+                <div class="card-value">&lt; 1 ms</div>
+                <div class="card-subtext">Ultra Low Latency</div>
+            </div>
+        </section>
+
+        <!-- Feature Details -->
+        <section class="content-box">
+            <h2>⚡ Fitur Template C++</h2>
+            <div class="feature-list">
+                <div class="feature-item">
+                    <div class="feature-icon">🚀</div>
+                    <div>
+                        <h3>Performa Tinggi</h3>
+                        <p>Menggunakan bahasa C++ murni untuk melayani permintaan HTTP dengan memori minimal dan kecepatan maksimal.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📦</div>
+                    <div>
+                        <h3>Zero Dependencies</h3>
+                        <p>Tidak memerlukan runtime eksternal seperti Node.js atau Python. Cukup kompilasi file C++ langsung.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🧩</div>
+                    <div>
+                        <h3>Template Variable</h3>
+                        <p>Sistem penggantian placeholder otomatis (seperti <code>{{TAG}}</code>) dari backend C++.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔄</div>
+                    <div>
+                        <h3>REST API Ready</h3>
+                        <p>Dapat menyajikan data JSON (misal <code>/api/status</code>) untuk diperbarui secara dinamis via JavaScript.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick API Action -->
+        <section class="action-box">
+            <div>
+                <strong>Test API Real-time</strong>
+                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.2rem;">
+                    Klik tombol untuk mengambil data JSON live dari backend C++ endpoint <code>/api/status</code>.
+                </p>
+            </div>
+            <button class="btn" onclick="fetchStatus()">Refresh Status</button>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Dibangun dengan <span>C++ HTTP Server</span> &amp; Modern HTML5.</p>
+    </footer>
+
+    <!-- Interactive script -->
+    <script>
+        async function fetchStatus() {
+            try {
+                const res = await fetch('/api/status');
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.uptime !== undefined) {
+                        document.getElementById('val-uptime').innerText = data.uptime + 's';
+                    }
+                    if (data.status) {
+                        document.getElementById('server-status').innerText = data.status;
+                    }
+                }
+            } catch (err) {
+                console.log("Running standalone or server API unreachable:", err);
+            }
+        }
+
+        // Otomatis refresh status setiap 3 detik jika di-serve oleh C++
+        setInterval(fetchStatus, 3000);
+    </script>
+</body>
+</html>
