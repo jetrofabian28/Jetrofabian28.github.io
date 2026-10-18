@@ -66,45 +66,68 @@
 			text-underline-offset: 4px;
 		}
 
-		.project-menu {
-			position: relative;
+		.site-nav {
+			display: flex;
+			align-items: center;
+			gap: 24px;
 			margin-left: auto;
 		}
 
-		.project-menu summary {
+		.nav-menu, .submenu {
+			position: relative;
+		}
+
+		.nav-menu summary, .submenu summary {
 			cursor: pointer;
 			list-style: none;
 		}
 
-		.project-menu summary::-webkit-details-marker { display: none; }
+		.nav-menu summary::-webkit-details-marker, .submenu summary::-webkit-details-marker {
+			display: none;
+		}
 
-		.project-menu summary::after {
+		.nav-menu summary::after, .submenu summary::after {
 			content: "▾";
 			margin-left: 7px;
 		}
 
-		.project-menu[open] summary::after { content: "▴"; }
+		.nav-menu[open] > summary::after, .submenu[open] > summary::after {
+			content: "▴";
+		}
 
-		.project-menu > a {
+		.menu-panel, .submenu-panel {
 			position: absolute;
 			top: calc(100% + 12px);
-			right: 0;
 			z-index: 1;
-			min-width: 140px;
-			padding: 12px 16px;
 			border: 1px solid var(--line);
 			border-radius: 3px;
 			background: var(--paper);
-			text-decoration: none;
 			box-shadow: 0 8px 20px rgb(24 52 45 / 10%);
 		}
 
-		.project-menu > a:hover { background: #eaf0e5; }
+		.menu-panel {
+			left: 0;
+			min-width: 200px;
+			padding: 6px;
+		}
 
-		.project-menu summary:focus-visible, .project-menu > a:focus-visible {
+		.submenu-panel {
+			top: -7px;
+			left: calc(100% + 8px);
+			min-width: 140px;
+			padding: 12px 16px;
+			text-decoration: none;
+		}
+
+		.submenu-panel:hover { background: #eaf0e5; }
+
+		.nav-menu summary:focus-visible, .submenu summary:focus-visible,
+		.menu-panel a:focus-visible, header > a:focus-visible {
 			outline: 3px solid #779348;
 			outline-offset: 4px;
 		}
+
+		.nav-placeholder { cursor: default; }
 
 		main {
 			width: min(100% - 48px, 1080px);
@@ -188,7 +211,9 @@
 
 		@media (max-width: 520px) {
 			header, footer, main { width: min(100% - 36px, 1080px); }
-			header { min-height: 70px; }
+			header { min-height: 70px; flex-wrap: wrap; gap: 12px; padding-block: 12px; }
+			.site-nav { order: 1; width: 100%; margin-left: 0; gap: 20px; }
+			header > a { margin-left: auto; }
 			.intro { font-size: 16px; }
 			footer { gap: 12px; font-size: 12px; }
 		}
@@ -197,6 +222,19 @@
 <body>
 	<header>
 		<div class="mark"><span class="mark-icon" aria-hidden="true">✳</span> Fabian Jethro Falah Kalangi </div>
+		<nav class="site-nav" aria-label="Main navigation">
+			<details class="nav-menu">
+				<summary>Project</summary>
+				<div class="menu-panel">
+					<details class="submenu">
+						<summary>UTS Project ALPRO</summary>
+						<a class="submenu-panel" href="https://github.com/jetrofabian28/uts_alpro-Kelompok-4">UTS ALPRO</a>
+					</details>
+				</div>
+			</details>
+			<span class="nav-placeholder">Note</span>
+			<span class="nav-placeholder">About</span>
+		</nav>
 		<a href="https://github.com/">Find me on GitHub <span aria-hidden="true">↗</span></a>
 	</header>
 
