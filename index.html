@@ -66,6 +66,46 @@
 			text-underline-offset: 4px;
 		}
 
+		.project-menu {
+			position: relative;
+			margin-left: auto;
+		}
+
+		.project-menu summary {
+			cursor: pointer;
+			list-style: none;
+		}
+
+		.project-menu summary::-webkit-details-marker { display: none; }
+
+		.project-menu summary::after {
+			content: "▾";
+			margin-left: 7px;
+		}
+
+		.project-menu[open] summary::after { content: "▴"; }
+
+		.project-menu > a {
+			position: absolute;
+			top: calc(100% + 12px);
+			right: 0;
+			z-index: 1;
+			min-width: 140px;
+			padding: 12px 16px;
+			border: 1px solid var(--line);
+			border-radius: 3px;
+			background: var(--paper);
+			text-decoration: none;
+			box-shadow: 0 8px 20px rgb(24 52 45 / 10%);
+		}
+
+		.project-menu > a:hover { background: #eaf0e5; }
+
+		.project-menu summary:focus-visible, .project-menu > a:focus-visible {
+			outline: 3px solid #779348;
+			outline-offset: 4px;
+		}
+
 		main {
 			width: min(100% - 48px, 1080px);
 			margin: auto;
@@ -157,7 +197,10 @@
 <body>
 	<header>
 		<div class="mark"><span class="mark-icon" aria-hidden="true">✳</span> My little corner</div>
-		<a href="https://github.com/">Find me on GitHub <span aria-hidden="true">↗</span></a>
+		<details class="project-menu">
+			<summary>Project</summary>
+			<a href="https://github.com/jetrofabian28/uts_alpro-Kelompok-4">UTS ALPRO</a>
+		</details>
 	</header>
 
 	<main>
